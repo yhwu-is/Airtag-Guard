@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="deviceBeaconCount"
+            type="String" />
+
+        <variable
+            name="isClickable"
+            type="Boolean" />
+
+        <variable
+            name="baseDevice"
+            type="de.seemoo.at_tracking_detection.database.models.device.BaseDevice" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/device_item_card"
+        style="?attr/materialCardViewElevatedStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/devices_item_height"
+        android:layout_margin="@dimen/card_margin"
+        android:clickable="@{isClickable}"
+        android:transitionName="@{baseDevice.address}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/device_guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.15" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/device_guideline_middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.80" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/device_guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.94" />
+
+            <ImageView
+                android:id="@+id/imageFindMy"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="10dp"
+                android:contentDescription="@string/device_icon"
+                android:src="@{baseDevice.device.drawable}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/device_guideline_left"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_baseline_device_unknown_24" />
+
+            <TextView
+                android:id="@+id/device_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:text="@{baseDevice.deviceNameWithID}"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:textColor="@{baseDevice.ignore ? @color/light_grey : @color/defaultTextColor}"
+                app:layout_constraintEnd_toStartOf="@+id/alert_icon"
+                app:layout_constraintLeft_toRightOf="@id/device_guideline_left"
+                app:layout_constraintRight_toLeftOf="@id/device_guideline_middle"
+                app:layout_constraintStart_toStartOf="@+id/device_first_discovery"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/title_debug" />
+
+            <LinearLayout
+                android:id="@+id/device_first_discovery"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toRightOf="@id/device_guideline_left"
+                app:layout_constraintRight_toLeftOf="@id/device_guideline_middle"
+                app:layout_constraintTop_toBottomOf="@id/device_name">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:autoSizeTextType="uniform"
+                    android:maxLines="1"
+                    android:text="@string/device_item_first_discovery" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:autoSizeTextType="uniform"
+                    android:maxLines="1"
+                    android:text="@{baseDevice.formattedDiscoveryDate}"
+                    tools:text="01/01/1337, 13:37" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintLeft_toRightOf="@id/device_guideline_left"
+                app:layout_constraintRight_toLeftOf="@id/device_guideline_middle"
+                app:layout_constraintTop_toBottomOf="@id/device_first_discovery">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:autoSizeTextType="uniform"
+                    android:maxLines="1"
+                    android:text="@string/device_item_last_seen" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:autoSizeTextType="uniform"
+                    android:maxLines="1"
+                    android:text="@{baseDevice.formattedLastSeenDate}"
+                    tools:text="03/01/1337, 13:37" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/device_beacons"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@string/beacons"
+                android:textSize="10sp"
+                app:layout_constraintLeft_toLeftOf="@id/device_guideline_middle"
+                app:layout_constraintRight_toRightOf="@id/device_guideline_right"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SmallSp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@{deviceBeaconCount}"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/device_guideline_middle"
+                app:layout_constraintRight_toRightOf="@id/device_guideline_right"
+                app:layout_constraintTop_toBottomOf="@id/device_beacons"
+                tools:text="8" />
+
+
+            <ImageView
+                android:id="@+id/device_arrow"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="@{isClickable ? View.VISIBLE : View.GONE, default=visible}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/device_guideline_right"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_chevron_right_24"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/ignored_icon"
+                android:layout_width="20dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:contentDescription="@string/alert_sent_icon"
+                android:visibility="@{baseDevice.ignore ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintBottom_toTopOf="@+id/device_first_discovery"
+                app:layout_constraintEnd_toStartOf="@+id/device_guideline_middle"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_alarm_off_24"
+                app:tint="@color/slate_gray" />
+
+            <ImageView
+                android:id="@+id/alert_icon"
+                android:layout_width="20dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/alert_sent_icon"
+                android:visibility="@{baseDevice.notificationSent ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintBottom_toTopOf="@+id/device_first_discovery"
+                app:layout_constraintEnd_toStartOf="@+id/ignored_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_dialog_alert"
+                app:tint="@color/slate_gray" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.ATTrackingDetection" parent="Theme.Material3.Light">
+        <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/ThemeActionBar</item>
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/ThemeActionBar</item>
+        <item name="android:statusBarColor">?android:colorBackground</item>
+    </style>
+
+    <style name="ThemeActionBar"
+        parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background">@null</item>
+        <!-- Support library compatibility -->
+        <item name="background">@null</item>
+    </style>
+
+    <color name="appintro_ripple_color">@color/black</color>
+    <color name="appintro_background_color">@color/slate_gray</color>
+    <color name="appintro_title_color">@color/black</color>
+    <color name="appintro_desc_color">@color/black</color>
+    <color name="appintro_icon_tint">@color/black</color>
+
+    <color name="defaultTextColor">@color/black</color>
+</resources>

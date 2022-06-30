@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.dashboard.RiskDetailFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.seemoo.at_tracking_detection.ui.dashboard.RiskDetailViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/include_tracker_location_cards"
+                app:viewModel="@{viewModel}" />
+
+            <include
+                layout="@layout/include_devices_beacons_cards"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginTop="22dp"
+                app:viewModel="@{viewModel}" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/risk_card"
+                style="?attr/materialCardViewElevatedStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:visibility="@{viewModel.numberOfTrackersFound == 0 ? View.GONE : View.VISIBLE}"
+                app:cardBackgroundColor="@{viewModel.riskColor}"
+                tools:cardBackgroundColor="@color/risk_high">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dates_detected"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@{viewModel.receivedNotificationDatesString}"
+                        android:textAppearance="?attr/textAppearanceBodyLarge"
+                        android:textColor="@color/white"
+                        tools:text="20.01.2022 10:15\n12.12.2021 09:31\n11.12.2021 09:00" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <include
+                layout="@layout/include_scan_times"
+                android:layout_marginTop="22dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:viewModel="@{viewModel}"
+                android:visibility="@{viewModel.lastScans.length() == 0 ? View.GONE : View.VISIBLE}"
+                />
+
+            <include
+                layout="@layout/include_risk_detail_find_airtag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="22dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>
+
